@@ -1,6 +1,6 @@
 package org.serious.dev.exception;
 
-public enum ErrorCode {
+public enum GrpcErrorCode {
 
     POST_NOT_FOUND,
     POST_ALREADY_RESERVED,
