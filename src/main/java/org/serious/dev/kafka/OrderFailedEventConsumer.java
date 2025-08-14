@@ -18,8 +18,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderFailedEventConsumer {
 
-    public final PostService postService;
-    public final ObjectMapper objectMapper;
+    private final PostService postService;
+    private final ObjectMapper objectMapper;
 
     @KafkaListener(
             topics = "${spring.kafka.topics.order-topic}",
@@ -34,9 +34,12 @@ public class OrderFailedEventConsumer {
         }
 
         OrderFailedEvent orderFailedEvent = optionalEvent.get();
-        log.info("Получено событие для отмены резервирования поста с postId={})", orderFailedEvent.getPostId());
-        postService.cancelPostReservation(orderFailedEvent.getPostId(), orderFailedEvent.getUserId());
-        log.info("Выполнена отмена резервирования поста с postId={}", orderFailedEvent.getPostId());
+        String requestId = orderFailedEvent.getRequestId();
+        Long postId = orderFailedEvent.getPostId();
+
+        log.info("[{}] получено событие для отмены резервирования поста с postId={})", requestId, postId);
+        postService.cancelPostReservation(postId, orderFailedEvent.getUserId());
+        log.info("[{}] выполнена отмена резервирования поста с postId={}", requestId, postId);
         ack.acknowledge();
     }
 

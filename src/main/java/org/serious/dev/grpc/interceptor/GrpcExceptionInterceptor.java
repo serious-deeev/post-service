@@ -8,7 +8,7 @@ import io.grpc.ServerInterceptor;
 import io.grpc.Status;
 import io.grpc.protobuf.ProtoUtils;
 import lombok.RequiredArgsConstructor;
-import org.serious.dev.exception.HasErrorCode;
+import org.serious.dev.exception.HasGrpcErrorCode;
 import org.serious.dev.exception.NoSuchPostException;
 import org.serious.dev.exception.PostAlreadyReservedException;
 import org.serious.dev.exception.PostCancelException;
@@ -75,7 +75,7 @@ public class GrpcExceptionInterceptor implements ServerInterceptor {
         Status actualStatus = EXCEPTION_STATUS_MAP.getOrDefault(exception.getClass(), UNKNOWN);
         Metadata metadata = new Metadata();
 
-        if (exception instanceof HasErrorCode errorTypedException) {
+        if (exception instanceof HasGrpcErrorCode errorTypedException) {
             com.google.rpc.Status protoStatus = com.google.rpc.Status.newBuilder()
                     .setMessage(errorTypedException.getErrorType().name())
                     .build();

@@ -1,10 +1,10 @@
 package org.serious.dev.exception;
 
-import static org.serious.dev.exception.ErrorCode.POST_NOT_FOUND;
+import static org.serious.dev.exception.GrpcErrorCode.POST_NOT_FOUND;
 
-public class NoSuchPostException extends RuntimeException implements HasErrorCode {
+public class NoSuchPostException extends RuntimeException implements HasGrpcErrorCode {
 
-    private static final ErrorCode ERROR_TYPE = POST_NOT_FOUND;
+    private static final GrpcErrorCode ERROR_TYPE = POST_NOT_FOUND;
     private static final String TEMPLATE = "пост id=%d не найден";
 
     public NoSuchPostException(Long id) {
@@ -12,7 +12,7 @@ public class NoSuchPostException extends RuntimeException implements HasErrorCod
     }
 
     @Override
-    public Enum<?> getErrorType() {
+    public GrpcErrorCode getErrorType() {
         return ERROR_TYPE;
     }
 }

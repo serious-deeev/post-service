@@ -1,10 +1,10 @@
 package org.serious.dev.exception;
 
-import static org.serious.dev.exception.ErrorCode.POST_CANCEL_RESERVATION_ERROR;
+import static org.serious.dev.exception.GrpcErrorCode.POST_CANCEL_RESERVATION_ERROR;
 
-public class PostCancelException extends RuntimeException implements HasErrorCode {
+public class PostCancelException extends RuntimeException implements HasGrpcErrorCode {
 
-    private static final ErrorCode ERROR_TYPE = POST_CANCEL_RESERVATION_ERROR;
+    private static final GrpcErrorCode ERROR_TYPE = POST_CANCEL_RESERVATION_ERROR;
     private static final String TEMPLATE = "неуспешная попытка отмены резерва поста id=%d пользователя userId=%d";
 
     public PostCancelException(Long id, Long userId, Exception e) {
@@ -12,7 +12,7 @@ public class PostCancelException extends RuntimeException implements HasErrorCod
     }
 
     @Override
-    public Enum<?> getErrorType() {
+    public GrpcErrorCode getErrorType() {
         return ERROR_TYPE;
     }
 }
